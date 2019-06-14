@@ -32,7 +32,7 @@
     "jszip": "^3.1.5",
     "minireset.css": "~0.0.4",
     "npm": "^6.9.0",
-    "rxjs": "~6.3.3",
+    "rxjs": "~6.5.2",
     "tslib": "^1.9.0",
     "uzip": "0.0.0",
     "web-animations-js": "^2.3.1",
