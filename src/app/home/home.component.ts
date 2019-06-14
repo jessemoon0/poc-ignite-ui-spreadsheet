@@ -24,8 +24,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     const excelFile = '../../assets/Sample1.xlsx';
     ExcelUtility.loadFromUrl(excelFile).then((w: Workbook) => {
-      this.spreadsheet.workbook = w;
-      this.spreadsheet.activeWorksheet.protect();
+      if (this.spreadsheet) {
+        this.spreadsheet.workbook = w;
+        this.spreadsheet.activeWorksheet.protect();
+      }
     });
   }
 
