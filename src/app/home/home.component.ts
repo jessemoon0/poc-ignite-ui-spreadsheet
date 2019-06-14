@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IgxSpreadsheetComponent } from 'igniteui-angular-spreadsheet/ES5/igx-spreadsheet-component';
-import { ExcelUtility } from '../excel-utility.service';
+import { ExcelUtilityService } from '../excel-utility.service';
 import { Workbook } from 'igniteui-angular-excel/ES5/excel.core';
 import { SpreadsheetActivePaneChangedEventArgs } from 'igniteui-angular-spreadsheet/ES5/igx-spreadsheet-active-pane-changed-event-args';
 // tslint:disable-next-line:max-line-length
@@ -21,14 +21,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   // WorkSheet > SpreadsheetPane > Worksheet[] (You can select multiple worksheets)
 
   ngOnInit(): void {
-
-    const excelFile = '../../assets/Sample1.xlsx';
-    ExcelUtility.loadFromUrl(excelFile).then((w: Workbook) => {
-      if (this.spreadsheet) {
-        this.spreadsheet.workbook = w;
-        this.spreadsheet.activeWorksheet.protect();
-      }
-    });
+    if (this.spreadsheet) {
+      this.configureSheet();
+      const excelFile = '../../assets/Sample1.xlsx';
+      ExcelUtilityService.loadFromUrl(excelFile).then((w: Workbook) => {
+        if (this.spreadsheet) {
+          this.spreadsheet.workbook = w;
+          this.spreadsheet.activeWorksheet.protect();
+        }
+      });
+    }
   }
 
   ngOnDestroy(): void {
@@ -50,7 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     console.log('Files:' + input.files[0].name);
 
-    ExcelUtility.load(input.files[0]).then((w: Workbook) => {
+    ExcelUtilityService.load(input.files[0]).then((w: Workbook) => {
       console.log('Loaded Workbook: ');
       console.log(w);
       this.spreadsheet.workbook = w;
@@ -74,17 +76,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   // SPREADSHEET EVENTS
-  
+
   // this.spreadsheet.executeAction() has a lot of actions we can execute on the document
 
   // When we change sheets
-  // Fires when we execute ExcelUtility.loadFromUrl and when we change sheets by tabs
+  // Fires when we execute ExcelUtilityService.loadFromUrl and when we change sheets by tabs
   onActivePaneChanged(event: { sender: any, args: SpreadsheetActivePaneChangedEventArgs }) {
     console.log(event);
   }
 
   // When we load a document
-  // Fires when we execute ExcelUtility.loadFromUrl and when we change sheets by tabs
+  // Fires when we execute ExcelUtilityService.loadFromUrl and when we change sheets by tabs
   onActiveWorksheetChanged(event: { sender: any, args: SpreadsheetActiveWorksheetChangedEventArgs}) {
     console.log(event);
   }
@@ -96,7 +98,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   // Same as onSelectionChanged but doesnt activate when we select an area of cells
-  // Also when we execute ExcelUtility.loadFromUrl
+  // Also when we execute ExcelUtilityService.loadFromUrl
   onActiveCellChanged(event: { sender: any, args: SpreadsheetActiveCellChangedEventArgs }) {
     // console.log(event);
   }

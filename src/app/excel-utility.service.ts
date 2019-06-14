@@ -7,7 +7,7 @@ import { WorkbookSaveOptions } from 'igniteui-angular-excel/ES5/WorkbookSaveOpti
 @Injectable({
   providedIn: 'root'
 })
-export class ExcelUtility {
+export class ExcelUtilityService {
   public static getExtension(format: WorkbookFormat) {
     switch (format) {
       case WorkbookFormat.StrictOpenXml:
@@ -28,7 +28,7 @@ export class ExcelUtility {
 
   public static load(file: File): Promise<Workbook> {
     return new Promise<Workbook>((resolve, reject) => {
-      ExcelUtility.readFileAsUint8Array(file).then((a) => {
+      ExcelUtilityService.readFileAsUint8Array(file).then((a) => {
         Workbook.load(a, null, (w) => {
           resolve(w);
         }, (e) => {
@@ -63,7 +63,7 @@ export class ExcelUtility {
       opt.type = 'blob';
 
       workbook.save(opt, (d) => {
-        const fileExt = ExcelUtility.getExtension(workbook.currentFormat);
+        const fileExt = ExcelUtilityService.getExtension(workbook.currentFormat);
         const fileName = fileNameWithoutExtension + fileExt;
         saveAs(d as Blob, fileName);
         resolve(fileName);
