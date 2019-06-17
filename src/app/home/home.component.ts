@@ -20,11 +20,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   // Hierarchy of objects:
   // WorkSheet > SpreadsheetPane > Worksheet[] (You can select multiple worksheets)
 
+  constructor(private excelUtilityService: ExcelUtilityService) {}
+
   ngOnInit(): void {
     if (this.spreadsheet) {
       this.configureSheet();
       const excelFile = '../../assets/Sample1.xlsx';
-      ExcelUtilityService.loadFromUrl(excelFile).then((w: Workbook) => {
+      this.excelUtilityService.loadFromUrl(excelFile).then((w: Workbook) => {
         if (this.spreadsheet) {
           this.spreadsheet.workbook = w;
           this.spreadsheet.activeWorksheet.protect();
@@ -52,7 +54,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     console.log('Files:' + input.files[0].name);
 
-    ExcelUtilityService.load(input.files[0]).then((w: Workbook) => {
+    this.excelUtilityService.load(input.files[0]).then((w: Workbook) => {
       console.log('Loaded Workbook: ');
       console.log(w);
       this.spreadsheet.workbook = w;

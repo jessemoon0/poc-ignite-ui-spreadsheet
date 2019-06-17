@@ -8,7 +8,7 @@ import { WorkbookSaveOptions } from 'igniteui-angular-excel/ES5/WorkbookSaveOpti
   providedIn: 'root'
 })
 export class ExcelUtilityService {
-  public static getExtension(format: WorkbookFormat) {
+  public getExtension(format: WorkbookFormat) {
     switch (format) {
       case WorkbookFormat.StrictOpenXml:
       case WorkbookFormat.Excel2007:
@@ -26,9 +26,9 @@ export class ExcelUtilityService {
     }
   }
 
-  public static load(file: File): Promise<Workbook> {
+  public load(file: File): Promise<Workbook> {
     return new Promise<Workbook>((resolve, reject) => {
-      ExcelUtilityService.readFileAsUint8Array(file).then((a) => {
+      this.readFileAsUint8Array(file).then((a) => {
         Workbook.load(a, null, (w) => {
           resolve(w);
         }, (e) => {
@@ -40,7 +40,7 @@ export class ExcelUtilityService {
     });
   }
 
-  public static loadFromUrl(url: string): Promise<Workbook> {
+  public loadFromUrl(url: string): Promise<Workbook> {
     return new Promise<Workbook>((resolve, reject) => {
       const req = new XMLHttpRequest();
       req.open('GET', url, true);
@@ -57,13 +57,13 @@ export class ExcelUtilityService {
     });
   }
 
-  public static save(workbook: Workbook, fileNameWithoutExtension: string): Promise<string> {
+  public save(workbook: Workbook, fileNameWithoutExtension: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       const opt = new WorkbookSaveOptions();
       opt.type = 'blob';
 
       workbook.save(opt, (d) => {
-        const fileExt = ExcelUtilityService.getExtension(workbook.currentFormat);
+        const fileExt = this.getExtension(workbook.currentFormat);
         const fileName = fileNameWithoutExtension + fileExt;
         saveAs(d as Blob, fileName);
         resolve(fileName);
@@ -73,7 +73,7 @@ export class ExcelUtilityService {
     });
   }
 
-  private static readFileAsUint8Array(file: File): Promise<Uint8Array> {
+  private readFileAsUint8Array(file: File): Promise<Uint8Array> {
     return new Promise<Uint8Array>((resolve, reject) => {
       const fr = new FileReader();
       fr.onerror = (e) => {
