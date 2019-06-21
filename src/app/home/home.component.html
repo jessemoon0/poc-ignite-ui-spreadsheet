@@ -2,14 +2,13 @@
   <h2 class="content__header content__subject">Welcome to Ignite UI for Angular</h2>
   <button (click)="onProtecting()">On Protecting</button>
 </div>
+<br>
 <div class="options">
   <label class="optionLabel" for="openFile">Choose Excel File:</label>
   <input class="button" id="openFile" type="file" (change)="openFile($event.target)" accept=".xls, .xlt, .xlsx, .xlsm, .xltm, .xltx">
 </div>
 <div (contextmenu)="onRightClick($event)">
   <igx-spreadsheet #spreadsheet
-                   height="500px"
-                   width="100%"
                    (activeTableChanged)="onActiveTableChanged($event)"
                    (activePaneChanged)="onActivePaneChanged($event)"
                    (activeWorksheetChanged)="onActiveWorksheetChanged($event)"

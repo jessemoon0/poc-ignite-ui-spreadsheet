@@ -30,6 +30,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (this.spreadsheet) {
           this.spreadsheet.workbook = w;
           this.spreadsheet.activeWorksheet.protect();
+          this.spreadsheet.height = '80vh';
+          this.spreadsheet.width = '80vw';
         }
       });
     }
