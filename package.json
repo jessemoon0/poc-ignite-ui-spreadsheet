@@ -27,7 +27,7 @@
     "igniteui-angular-core": "^7.2.3",
     "igniteui-angular-excel": "^7.2.3",
     "igniteui-angular-spreadsheet": "^7.2.3",
-    "jszip": "^3.1.5",
+    "jszip": "^3.7.0",
     "rxjs": "~6.5.2",
     "tslib": "^1.9.0",
     "uzip": "0.0.0",
